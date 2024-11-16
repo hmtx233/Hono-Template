@@ -1,0 +1,17 @@
+{
+  "name": "create-hono-app",
+  "scripts": {
+    "dev": "bun run --hot src/app/bun.ts",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "hono": "^4.6.10"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@types/bun": "latest",
+    "husky": "^9.1.6"
+  }
+}
