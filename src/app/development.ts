@@ -1,3 +1,3 @@
 /** @notice library imports */
 /// Local imports
-export * from "@/core/application";
+export * from "./application";

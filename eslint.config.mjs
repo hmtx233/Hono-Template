@@ -7,7 +7,7 @@ export default tseslint.config(
   /// Recommendations
   eslintConfigPrettier,
   eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.recommended,
 
   /// Ignore files
   {
@@ -34,6 +34,7 @@ export default tseslint.config(
   {
     rules: {
       "no-console": "error",
+      "@typescript-eslint/no-duplicate-enum-values": "off",
     },
   },
 );
