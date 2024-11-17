@@ -1,20 +1,16 @@
 /** @notice library imports */
-import express from "express";
+import { Hono } from "hono";
 
 /// Local imports
-import { format } from "@/utils/formatter";
-import { globalErrorHandler } from "@/middleware/globalErrorHandler";
+import { rootRouter } from "@/api";
+import { handlers } from "@/middleware";
 
-const app = express();
+const app = new Hono();
 
-app.get("/", (_req, res) => {
-  res.json({
-    message: `Hello Hono!`,
-    formatted: format("SO cool"),
-  });
-});
+app.route("/api/", rootRouter);
 
-/// Global error catcher
-app.use(globalErrorHandler);
+/// Global handlers
+app.onError(handlers.onErrorHandler);
+app.notFound(handlers.onNotFoundHandler);
 
 export default app;
