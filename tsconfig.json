@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "ESNext"
-    ],
+    "lib": ["ESNext"],
     "target": "ESNext",
     "module": "ESNext",
     "moduleDetection": "force",
@@ -21,16 +19,9 @@
     "noPropertyAccessFromIndexSignature": true,
     // Paths
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
-  "exclude": [
-    "dist",
-    "node_modules"
-  ],
-  "include": [
-    "src"
-  ]
+  "exclude": ["dist", "node_modules"],
+  "include": ["src"]
 }
