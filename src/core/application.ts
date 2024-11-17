@@ -1,10 +1,12 @@
-import { Hono } from "hono";
+/** @notice library imports */
+import express from "express";
+/// Local imports
 import { format } from "@/utils/formatter";
 
-const app = new Hono();
+const app = express();
 
-app.get("/", (c) => {
-  return c.json({
+app.get("/", (_req, res) => {
+  res.json({
     message: `Hello Hono!`,
     formatted: format("SO cool"),
   });
