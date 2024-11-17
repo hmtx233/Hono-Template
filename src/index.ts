@@ -1,9 +1,9 @@
 /** @notice library imports */
 /// Local imports
 import app from "@/core/application";
-import { Environments } from "@/config";
+import { Environments, Logger } from "@/config";
 
 /// Running application
 app.listen(Environments.PORT, () => {
-  console.log(`Running on :${Environments.PORT}`);
+  Logger.info(`Running`, { port: Environments.PORT });
 });

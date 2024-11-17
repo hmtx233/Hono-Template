@@ -31,6 +31,8 @@ export default tseslint.config(
 
   /// Rules
   {
-    rules: {},
+    rules: {
+      "no-console": "error"
+    },
   },
 );
