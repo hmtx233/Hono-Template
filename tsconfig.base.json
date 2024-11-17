@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ES2020",
+    "moduleDetection": "force",
+    "outDir": "dist",
+    // Bundler mode
+    "moduleResolution": "bundler",
+    // Best practices
+    "strict": true,
+    "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
+    // Some stricter flags
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noPropertyAccessFromIndexSignature": true,
+    // Paths
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "tsc-alias": {
+    "resolveFullPaths": true
+  },
+  "exclude": [
+    "dist",
+    "node_modules"
+  ],
+}
