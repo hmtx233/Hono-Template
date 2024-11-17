@@ -2,6 +2,10 @@
 import { serve } from "@hono/node-server";
 /// Local imports
 import app from "@/core/application";
+import { Environments } from "@/config";
 
 /// Running application
-serve(app);
+serve({
+  fetch: app.fetch,
+  port: Environments.PORT,
+});
