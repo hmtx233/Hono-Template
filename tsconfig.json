@@ -17,19 +17,12 @@
     "noPropertyAccessFromIndexSignature": true,
     // Paths
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
   "tsc-alias": {
     "resolveFullPaths": true
   },
-  "exclude": [
-    "dist",
-    "node_modules"
-  ],
-  "include": [
-    "src"
-  ]
+  "exclude": ["dist", "node_modules"],
+  "include": ["src"]
 }

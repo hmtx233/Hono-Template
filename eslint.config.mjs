@@ -32,7 +32,7 @@ export default tseslint.config(
   /// Rules
   {
     rules: {
-      "no-console": "error"
+      "no-console": "error",
     },
   },
 );
