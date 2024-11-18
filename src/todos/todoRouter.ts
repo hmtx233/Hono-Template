@@ -2,14 +2,14 @@
 import { Hono } from "hono";
 /// Local imports
 import { TodosRoutes } from "@/constants/routes";
-import { injectTodoControllerMiddleware } from "./todoDependencyMiddleware";
+import { injectTodoDependenciesMiddleware } from "./todoDependencyMiddleware";
 
 /// Todo router
 export const todoRouter = new Hono({
   strict: false,
 })
   /// Dependency injection
-  .use("*", injectTodoControllerMiddleware)
+  .use("*", injectTodoDependenciesMiddleware)
   /// Create todo
   .post(TodosRoutes.CREATE, (c) => c.get("todoController").createTodo(c))
 

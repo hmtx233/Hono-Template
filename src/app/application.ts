@@ -3,7 +3,7 @@ import "reflect-metadata";
 import { Hono } from "hono";
 
 /// Local imports
-import { handlers } from "@/middleware";
+import { handlers } from "@/middlewares";
 import { todoRouter } from "@/todos/todoRouter";
 import { ApplicationRoutes } from "@/constants/routes";
 

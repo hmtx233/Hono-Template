@@ -14,7 +14,7 @@ const todoServices = new TodoServices();
 const todoController = new TodoController(todoServices);
 
 /// Dependency injection
-export const injectTodoControllerMiddleware = createMiddleware<{
+export const injectTodoDependenciesMiddleware = createMiddleware<{
   Variables: Variables;
 }>(async (c, next) => {
   c.set("todoController", todoController);
