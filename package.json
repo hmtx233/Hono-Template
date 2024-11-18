@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "start": "node dist/index.js",
-    "dev": "NODE_ENV=development bun run --hot src/core/development.ts",
+    "dev": "NODE_ENV=development bun run --hot src/app/development.ts",
     "test": "jest",
     "prepare": "husky",
     "lint": "eslint . --fix",
