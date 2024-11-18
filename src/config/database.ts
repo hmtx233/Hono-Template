@@ -2,13 +2,13 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 /// Custom imports
-import { User } from "@/entity/User";
+import { Todo } from "@/todos/TodoEntity";
 import { Environments, isInDevelopment, isInTesting } from "./environments";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
   logging: false,
-  entities: [User],
+  entities: [Todo],
   migrations: [],
   subscribers: [],
   host: Environments.DATABASE_HOST,
