@@ -6,11 +6,7 @@ interface IEnvironments {
   PORT?: number;
 
   /// Database ///
-  DATABASE_PORT: number;
-  DATABASE_HOST: string;
-  DATABASE_NAME: string;
-  DATABASE_USERNAME: string;
-  DATABASE_PASSWORD: string;
+  DATABASE_URL: string;
 }
 
 /// Environments
@@ -21,22 +17,11 @@ export const Environments = grabEnv<IEnvironments>({
   },
 
   /// Database ///
-  DATABASE_PORT: {
-    type: "number",
-  },
-  DATABASE_HOST: {
-    type: "string",
-  },
-  DATABASE_NAME: {
-    type: "string",
-  },
-  DATABASE_USERNAME: {
-    type: "string",
-  },
-  DATABASE_PASSWORD: {
+  DATABASE_URL: {
     type: "string",
   },
 });
 
+export const DATABASE_MIGRATIONS_PATH = "./migrations";
 export const isInTesting = Environments.NODE_ENV === "test";
 export const isInDevelopment = Environments.NODE_ENV === "development";

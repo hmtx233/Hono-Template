@@ -1,31 +1,27 @@
 /** @notice library imports */
-import { DataSource } from "typeorm";
+import { execSync } from "child_process";
 import { testClient } from "hono/testing";
 import { StatusCodes } from "http-status-codes";
 /// Local imports
-import { Todo } from "./TodoEntity";
+import { todos } from "@/schemas";
 import { todoRouter } from "./todoRouter";
-import { AppDataSource } from "@/config/database";
 import { ApplicationRoutes } from "@/constants/routes";
-import { truncateDatabase } from "@/utils/databaseTruncate";
+import { database, postgresClient } from "@/config/database";
 
 /// Route - /todos
 const app = testClient(todoRouter);
 
 describe(ApplicationRoutes.TODOS, () => {
-  let connection: DataSource;
-
   /// Database connection
   beforeAll(async () => {
-    connection = await AppDataSource.initialize();
+    execSync("NODE_ENV=test bun run db:push");
   });
-
   beforeEach(async () => {
-    await truncateDatabase(connection);
+    await database.delete(todos);
   });
 
   afterAll(async () => {
-    await connection.destroy();
+    await postgresClient.end();
   });
 
   /// Current test data
@@ -57,8 +53,7 @@ describe(ApplicationRoutes.TODOS, () => {
         json: todoData,
       });
 
-      const todoRepo = connection.getRepository(Todo);
-      const todos = await todoRepo.find();
+      const todos = await database.query.todos.findMany();
 
       expect(todos).toHaveLength(1);
       expect(todos[0].isCompleted).toBeFalsy();

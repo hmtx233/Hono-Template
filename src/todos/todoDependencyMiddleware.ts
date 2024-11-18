@@ -1,10 +1,8 @@
 /** @notice library imports */
 import { createMiddleware } from "hono/factory";
 /// local imports
-import { Todo } from "./TodoEntity";
 import { TodoServices } from "./TodoServices";
 import { TodoController } from "./TodoController";
-import { AppDataSource } from "@/config/database";
 
 /// Variable type
 export type Variables = {
@@ -12,8 +10,7 @@ export type Variables = {
 };
 
 /// Dependencies
-const todoRepo = AppDataSource.getRepository(Todo);
-const todoServices = new TodoServices(todoRepo);
+const todoServices = new TodoServices();
 const todoController = new TodoController(todoServices);
 
 /// Dependency injection

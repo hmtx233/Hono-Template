@@ -13,8 +13,10 @@ export default tseslint.config(
   {
     ignores: [
       "dist",
+      "migrations",
       "node_modules",
       "jest.config.js",
+      "drizzle.config.ts",
       "eslint.config.mjs",
       "commitlint.config.ts",
     ],
