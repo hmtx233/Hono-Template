@@ -12,6 +12,6 @@ export class TodoServices {
     const result = await database.insert(todos).values(params).returning({
       id: todos.id,
     });
-    return result.at(0);
+    return result.at(0)!;
   }
 }

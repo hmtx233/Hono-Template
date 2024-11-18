@@ -59,5 +59,16 @@ describe(ApplicationRoutes.TODOS, () => {
       expect(todos[0].isCompleted).toBeFalsy();
       expect(todos[0].description).toBe(todoData.description);
     });
+
+    it("Should contain 'success' & 'data.id' in json response.", async () => {
+      const response = await app.index.$post({
+        json: todoData,
+      });
+
+      const json = await response.json();
+      expect(json).toHaveProperty("success");
+      expect(json.success).toBeTruthy();
+      expect(json).toHaveProperty("data.id");
+    });
   });
 });

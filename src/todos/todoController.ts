@@ -6,6 +6,7 @@ import { StatusCodes } from "http-status-codes";
 /// Local imports
 import { TodoServices } from "./TodoServices";
 import { TodosRoutes } from "@/constants/routes";
+import { SuccessResponse } from "@/types/responses";
 import { Variables } from "./todoDependencyMiddleware";
 
 export class TodoController {
@@ -16,9 +17,15 @@ export class TodoController {
     const { description } = await c.req.json();
 
     /// Save into database
-    await this.todoService.create({ description });
+    const { id } = await this.todoService.create({ description });
 
     /// Response
-    return c.json({}, StatusCodes.CREATED);
+    return c.json<SuccessResponse<{ id: number }>>(
+      {
+        success: true,
+        data: { id },
+      },
+      StatusCodes.CREATED,
+    );
   }
 }
