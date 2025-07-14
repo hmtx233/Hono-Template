@@ -3,9 +3,9 @@ import "reflect-metadata";
 import { Hono } from "hono";
 
 /// Local imports
-import { handlers } from "@/middlewares";
-import { todoRouter } from "@/todos/todoRouter";
-import { ApplicationRoutes } from "@/constants/routes";
+import { handlers } from "@/handlers";
+import { todoRouter } from "@/routers/todo.routers";
+import { ApplicationRoutes } from "@/enums/router.enum";
 
 /// Core app
 const app = new Hono({ strict: false });

@@ -2,7 +2,7 @@
 import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
 /// Local imports
-import * as schema from "@/schemas";
+import * as schema from "@/models";
 import { Environments } from "./environments";
 
 /// Setup client and db instance

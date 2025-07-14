@@ -130,3 +130,8 @@ dist
 
 docker/data
 migrations
+bun.lockb
+.husky/*
+.bun/*
+.husky
+.bun

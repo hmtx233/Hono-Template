@@ -1,6 +1,6 @@
 /** @notice local imports */
-import { onErrorHandler } from "./onErrorHandler";
-import { onNotFoundHandler } from "./onNotFoundHandler";
+import { onErrorHandler } from "./error.handler";
+import { onNotFoundHandler } from "./notfound.handler";
 
 /// Export all the handlers
 export const handlers = Object.freeze({
