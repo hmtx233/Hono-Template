@@ -3,13 +3,20 @@ import { Hono } from "hono";
 /// Local imports
 import { TodosRoutes } from "@/enums/router.enum";
 import { injectTodoDependenciesMiddleware } from "@/middlewares/todo.di";
+import { excludeAuthMiddleware } from "@/middlewares/exclude-auth.middleware";
+import { AuthVariables } from "@/middlewares/auth.middleware";
 
 /// Todo router
-export const todoRouter = new Hono({
+export const todoRouter = new Hono<{
+  Variables: AuthVariables;
+}>({
   strict: false,
 })
   /// Dependency injection
   .use("*", injectTodoDependenciesMiddleware)
+  
+  /// 添加认证中间件保护所有路由（排除登录和注册）
+  .use("*", excludeAuthMiddleware)
 
   /// Create todo
   .post(TodosRoutes.CREATE, (c) => c.get("todoController").createTodo(c))

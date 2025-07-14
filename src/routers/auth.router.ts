@@ -1,82 +1,35 @@
 import { Hono } from 'hono'
-import { AuthController } from '@/controllers/auth.controller'
+import { UsersRoutes } from "@/enums/router.enum";
+import { injectAuthDependenciesMiddleware } from "@/middlewares/auth.di";
+import { Logger } from "@/config/logger";
+import { excludeAuthMiddleware } from "@/middlewares/exclude-auth.middleware";
+import { AuthVariables } from "@/middlewares/auth.middleware";
 
-export const createAuthRouter = (authController: AuthController) => {
-  const router = new Hono()
 
-  /**
-   * @openapi
-   * /api/auth/register:
-   *   post:
-   *     summary: 注册新用户
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema:
-   *             type: object
-   *             properties:
-   *               username:
-   *                 type: string
-   *                 minLength: 3
-   *                 maxLength: 50
-   *               email:
-   *                 type: string
-   *                 format: email
-   *               password:
-   *                 type: string
-   *                 minLength: 8
-   *                 maxLength: 100
-   *     responses:
-   *       201:
-   *         description: 用户注册成功
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                 success:
-   *                   type: boolean
-   *                 token:
-   *                   type: string
-   */
-  router.post('/register', (ctx) => authController.register(ctx))
+export const authRouter = new Hono<{
+  Variables: AuthVariables;
+}>(
+{
+  strict: false,
+})
 
-  /**
-   * @openapi
-   * /api/auth/login:
-   *   post:
-   *     summary: 用户登录
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema:
-   *             type: object
-   *             properties:
-   *               email:
-   *                 type: string
-   *                 format: email
-   *               password:
-   *                 type: string
-   *                 minLength: 8
-   *                 maxLength: 100
-   *     responses:
-   *       200:
-   *         description: 登录成功
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                 success:
-   *                   type: boolean
-   *                 token:
-   *                   type: string
-   *       401:
-   *         description: 凭证无效
-   */
-  router.post('/login', (ctx) => authController.login(ctx))
+  /// 添加日志中间件，记录请求路径
+  .use("*", async (c, next) => {
+    Logger.info(`Auth Router - Request path: ${c.req.path}`)
+    await next()
+  })
 
-  return router
-}
+  /// Dependency injection
+  .use("*", injectAuthDependenciesMiddleware)
+  
+  /// 添加认证中间件（会自动排除登录和注册路由）
+  .use("*", excludeAuthMiddleware)
+
+  .post(UsersRoutes.Register, (c) => {
+    Logger.info(`Processing register request at ${c.req.path}`)
+    return c.get("authController").register(c)
+  })
+  .post(UsersRoutes.Login, (c) => {
+    Logger.info(`Processing login request at ${c.req.path}`)
+    return c.get("authController").login(c)
+  });

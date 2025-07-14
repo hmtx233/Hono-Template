@@ -1,10 +1,10 @@
 import { verify, hash } from 'argon2'
-import { User, CreateUserDto, LoginDto } from '@/models/user.model'
+import { CreateUserDto, LoginDto } from '@/models/users.model'
 import { UserRepository } from '@/repository/user.repository'
 import { generateToken } from '@/utils/auth'
 
 export class AuthService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: UserRepository) { }
 
   async register(user: CreateUserDto): Promise<{ token: string }> {
     // 检查邮箱是否已存在
@@ -18,7 +18,8 @@ export class AuthService {
 
     // 创建用户
     const newUser = await this.userRepository.create({
-      ...user,
+      username: user.username,
+      email: user.email,
       password: passwordHash
     })
 

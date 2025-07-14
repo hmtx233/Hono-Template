@@ -1,5 +1,5 @@
 import { Context } from 'hono'
-import { AuthService } from '@/service/auth.service'
+import { AuthService } from '@/services/auth.service'
 import { registerSchema, loginSchema } from '@/validator/auth.validator'
 
 export class AuthController {
@@ -15,7 +15,7 @@ export class AuthController {
 
       // 返回响应
       return ctx.json({ success: true, token: result.token }, 201)
-    } catch (error: any) {
+    } catch (error: Error | any) {
       if (error.message === 'Email already exists') {
         return ctx.json({ success: false, error: 'Email already exists' }, 400)
       }
