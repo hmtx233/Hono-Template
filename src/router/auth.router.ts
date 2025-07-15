@@ -1,13 +1,11 @@
 import { Hono } from 'hono'
 import { UsersRoutes } from "@/enums/router.enum";
-import { injectAuthDependenciesMiddleware } from "@/middlewares/auth.di";
 import { Logger } from "@/config/logger";
 import { excludeAuthMiddleware } from "@/middlewares/exclude-auth.middleware";
-import { AuthVariables } from "@/middlewares/auth.middleware";
-
+import { Variables,injectDependenciesMiddleware } from "@/middlewares/deps.middleware";
 
 export const authRouter = new Hono<{
-  Variables: AuthVariables;
+  Variables: Variables;
 }>(
 {
   strict: false,
@@ -20,7 +18,7 @@ export const authRouter = new Hono<{
   })
 
   /// Dependency injection
-  .use("*", injectAuthDependenciesMiddleware)
+  .use("*", injectDependenciesMiddleware)
   
   /// 添加认证中间件（会自动排除登录和注册路由）
   .use("*", excludeAuthMiddleware)
@@ -32,4 +30,14 @@ export const authRouter = new Hono<{
   .post(UsersRoutes.Login, (c) => {
     Logger.info(`Processing login request at ${c.req.path}`)
     return c.get("authController").login(c)
+  })
+  // 添加获取用户信息的路由
+  .get(UsersRoutes.Profile, (c) => {
+    Logger.info(`Processing get profile request at ${c.req.path}`)
+    return c.get("authController").getProfile(c)
+  })
+  // 添加更新用户信息的路由
+  .put(UsersRoutes.UpdateProfile, (c) => {
+    Logger.info(`Processing update profile request at ${c.req.path}`)
+    return c.get("authController").updateProfile(c)
   });

@@ -17,3 +17,10 @@ export interface LoginDto {
   email: string
   password: string
 }
+
+// 添加更新用户信息的DTO
+export interface UpdateUserDto {
+  username?: string
+  email?: string
+  password?: string
+}

@@ -4,8 +4,8 @@ import { Hono } from "hono";
 
 /// Local imports
 import { handlers } from "@/handlers";
-import { todoRouter } from "@/routers/todo.router";
-import { authRouter } from "@/routers/auth.router";
+import { todoRouter } from "@/router/todo.router";
+import { authRouter } from "@/router/auth.router";
 import { ApplicationRoutes } from "@/enums/router.enum";
 
 /// Core app

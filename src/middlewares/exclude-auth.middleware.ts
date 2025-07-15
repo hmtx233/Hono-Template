@@ -14,7 +14,6 @@ export const excludeAuthMiddleware = async (
   Logger.info(`ExcludeAuthMiddleware - Checking path: ${path}, method: ${method}`)
   
   // 检查是否是登录或注册请求
-  // 注意：由于路由挂载方式，我们需要检查路径的结尾部分
   const isLoginRequest = path.endsWith(UsersRoutes.Login) && method === 'POST'
   const isRegisterRequest = path.endsWith(UsersRoutes.Register) && method === 'POST'
   
@@ -23,7 +22,6 @@ export const excludeAuthMiddleware = async (
   // 如果是登录或注册请求，直接放行
   if (isLoginRequest || isRegisterRequest) {
     Logger.info(`ExcludeAuthMiddleware - Excluding auth for path: ${path}`)
-    // 对于登录和注册路由，直接放行
     return next()
   }
   
