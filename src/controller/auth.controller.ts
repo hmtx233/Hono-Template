@@ -1,6 +1,7 @@
 import { Context } from 'hono'
 import { AuthService } from '@/service/auth.service'
 import { registerSchema, loginSchema, updateProfileSchema } from '@/validator/auth.validator'
+import { log } from 'console'
 
 export class AuthController {
   constructor(private authService: AuthService) {}
@@ -27,12 +28,12 @@ export class AuthController {
     try {
       // 验证请求体
       const loginData = await loginSchema.parseAsync(await ctx.req.json())
-
+      log('loginData', loginData)
       // 调用服务
       const result = await this.authService.login(loginData)
-
+      log('result', result)
       // 返回响应
-      return ctx.json({ success: true, token: result.token }, 200)
+      return ctx.json({ success: true, data: result }, 200)
     } catch (error: any) {
       if (error.message === 'Invalid credentials') {
         return ctx.json({ success: false, error: 'Invalid credentials' }, 401)

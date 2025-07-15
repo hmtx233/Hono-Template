@@ -1,5 +1,5 @@
 import { verify, hash } from 'argon2'
-import { CreateUserDto, LoginDto, Users, UpdateUserDto } from '@/models/users.model'
+import { CreateUserDto, LoginDto, Users, UpdateUserDto, LoginResponse } from '@/models/users.model'
 import { AuthRepository } from '@/repository/auth.repository'
 import { generateToken } from '@/utils/auth'
 
@@ -29,7 +29,7 @@ export class AuthService {
     return { token }
   }
 
-  async login(loginDto: LoginDto): Promise<{ token: string }> {
+  async login(loginDto: LoginDto): Promise<LoginResponse> {
     // 查找用户
     const user = await this.authRepository.findByEmail(loginDto.email)
     if (!user) {
@@ -45,7 +45,13 @@ export class AuthService {
     // 生成 JWT
     const token = generateToken(user.id)
 
-    return { token }
+    // 返回用户信息，但排除密码哈希
+    const { password_hash, ...userInfo } = user
+
+    return { 
+      token,
+      user: userInfo
+    }
   }
 
   // 添加获取用户信息的方法

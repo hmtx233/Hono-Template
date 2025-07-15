@@ -18,6 +18,12 @@ export interface LoginDto {
   password: string
 }
 
+// 添加登录响应类型
+export interface LoginResponse {
+  token: string
+  user: Omit<Users, 'password_hash'>
+}
+
 // 添加更新用户信息的DTO
 export interface UpdateUserDto {
   username?: string

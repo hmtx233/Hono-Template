@@ -1,5 +1,5 @@
 import { Context, Next } from 'hono'
-import { UsersRoutes } from '@/enums/router.enum'
+import { UsersRoutes, API_PREFIX } from '@/enums/router.enum'
 import { authMiddleware } from './auth.middleware'
 import { Logger } from '@/config/logger'
 
@@ -13,10 +13,14 @@ export const excludeAuthMiddleware = async (
   const method = c.req.method
   Logger.info(`ExcludeAuthMiddleware - Checking path: ${path}, method: ${method}`)
   
-  // 检查是否是登录或注册请求
-  const isLoginRequest = path.endsWith(UsersRoutes.Login) && method === 'POST'
-  const isRegisterRequest = path.endsWith(UsersRoutes.Register) && method === 'POST'
+  // 检查是否是登录或注册请求 - 使用精确匹配
+  const loginPath = `${API_PREFIX}${UsersRoutes.Login}`
+  const registerPath = `${API_PREFIX}${UsersRoutes.Register}`
   
+  const isLoginRequest = path === loginPath && method === 'POST'
+  const isRegisterRequest = path === registerPath && method === 'POST'
+  
+  Logger.info(`ExcludeAuthMiddleware - loginPath: ${loginPath}, registerPath: ${registerPath}`)
   Logger.info(`ExcludeAuthMiddleware - isLoginRequest: ${isLoginRequest}, isRegisterRequest: ${isRegisterRequest}`)
   
   // 如果是登录或注册请求，直接放行

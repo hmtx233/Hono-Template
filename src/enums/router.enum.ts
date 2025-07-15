@@ -1,4 +1,4 @@
-const API_PREFIX = "/api";
+export const API_PREFIX = "/api";
 
 export const enum ApplicationRoutes {
   TODOS = `${API_PREFIX}`,
